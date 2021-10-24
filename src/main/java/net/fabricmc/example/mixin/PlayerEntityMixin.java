@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
   }
 
   public void setAmount(int amount) {
-    this.amount += amount;
+    this.amount = amount;
   }
 
   @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
