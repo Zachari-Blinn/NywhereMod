@@ -1,5 +1,6 @@
 package net.fabricmc.example.mixin;
 
+import net.fabricmc.example.Account;
 import net.fabricmc.example.PlayerEntityExt;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -11,9 +12,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.nbt.NbtCompound;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityExt {
 
+  private List<Account> accounts = new ArrayList<>();
   private int amount;
 
   protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
@@ -36,5 +41,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
   @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
   public void readCustomDataToTag(NbtCompound nbt, CallbackInfo ci) {
     amount = nbt.getInt("amount");
+  }
+
+  public Account findAccount(String label) {
+    return accounts.stream().filter(account -> label.equals(account.getLabel())).findAny().orElse(null);
+  }
+
+  public List<Account> getAccounts() {
+    return accounts;
+  }
+
+  public void addAccounts(Account account) {
+    this.accounts.add(account);
   }
 }

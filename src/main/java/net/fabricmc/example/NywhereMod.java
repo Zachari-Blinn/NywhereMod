@@ -2,14 +2,14 @@ package net.fabricmc.example;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.MessageType;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static com.mojang.brigadier.arguments.IntegerArgumentType.getInteger;
 import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
+import static com.mojang.brigadier.arguments.StringArgumentType.string;
+import static com.mojang.brigadier.arguments.StringArgumentType.getString;
 import static net.minecraft.server.command.CommandManager.*;
 
 
@@ -25,7 +25,7 @@ public class NywhereMod implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("NywhereMod initialized");
+		LOGGER.info("Nywhere-Mod initialized");
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
 			dispatcher.register(literal("nywhere")
@@ -34,10 +34,17 @@ public class NywhereMod implements ModInitializer {
 					.then(literal("add")
 						.then(argument("amount", integer())
 							.executes(context -> {
-								((PlayerEntityExt) context.getSource().getPlayer()).setAmount(((PlayerEntityExt) context.getSource().getPlayer()).getAmount() + getInteger(context, "amount"));
+								PlayerEntityExt currentPlayer = ((PlayerEntityExt) context.getSource().getPlayer());
+
+								currentPlayer.setAmount(currentPlayer.getAmount() + getInteger(context, "amount"));
 								Text message = Text.of("[Nywhere-Mod] added " + getInteger(context, "amount") + " to your banking account");
 								context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
-								System.out.println("accountValue: " + ((PlayerEntityExt) context.getSource().getPlayer()).getAmount());
+								System.out.println("accountValue: " + currentPlayer.getAmount());
+
+								/* TEST account replacement system */
+								Account account = new Account("livret B", getInteger(context, "amount"), true);
+								currentPlayer.addAccounts(account);
+								context.getSource().getServer().getPlayerManager().broadcastChatMessage(Text.of("teest: " + currentPlayer.findAccount("livret B")), MessageType.CHAT, context.getSource().getPlayer().getUuid());
 								return 1;
 							})
 						)
@@ -46,8 +53,10 @@ public class NywhereMod implements ModInitializer {
 					.then(literal("remove")
 						.then(argument("amount", integer())
 							.executes(context -> {
-								((PlayerEntityExt) context.getSource().getPlayer()).setAmount(((PlayerEntityExt) context.getSource().getPlayer()).getAmount() - getInteger(context, "amount"));
-								Text message = Text.of("[NywhereMod] remove " + getInteger(context, "amount") + " to your banking account");
+								PlayerEntityExt currentPlayer = ((PlayerEntityExt) context.getSource().getPlayer());
+
+								currentPlayer.setAmount(currentPlayer.getAmount() - getInteger(context, "amount"));
+								Text message = Text.of("[Nywhere-Mod] remove " + getInteger(context, "amount") + " to your banking account");
 								context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
 								System.out.println(message);
 								return 1;
@@ -57,11 +66,25 @@ public class NywhereMod implements ModInitializer {
 					/* VIEW COMMAND */
 					.then(literal("view")
 						.executes(context -> {
-							Text message = Text.of("[NywhereMod] Amount of your money " + ((PlayerEntityExt) context.getSource().getPlayer()).getAmount());
+							PlayerEntityExt currentPlayer = ((PlayerEntityExt) context.getSource().getPlayer());
+							Text message = Text.of("[Nywhere-Mod] Amount of your money " + currentPlayer.getAmount());
 							context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
 							System.out.println(message);
 							return 1;
 						})
+					)
+				)
+				.then(literal("account")
+					.then(literal("create")
+						.then(argument("label", string())
+							.executes(context -> {
+								PlayerEntityExt currentPlayer = ((PlayerEntityExt) context.getSource().getPlayer());
+								Account account = new Account(getString(context,"label"), 0, true);
+								currentPlayer.addAccounts(account);
+								context.getSource().getServer().getPlayerManager().broadcastChatMessage(Text.of("New account was created: " + currentPlayer.findAccount(getString(context, "label"))), MessageType.CHAT, context.getSource().getPlayer().getUuid());
+								return 1;
+							})
+						)
 					)
 				)
 			);
