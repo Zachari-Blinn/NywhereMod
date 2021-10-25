@@ -34,7 +34,7 @@ public class NywhereMod implements ModInitializer {
 					.then(literal("add")
 						.then(argument("amount", integer())
 							.executes(context -> {
-								((PlayerEntityExt) context.getSource().getPlayer()).setAmount(getInteger(context, "amount"));
+								((PlayerEntityExt) context.getSource().getPlayer()).setAmount(((PlayerEntityExt) context.getSource().getPlayer()).getAmount() + getInteger(context, "amount"));
 								Text message = Text.of("[Nywhere-Mod] added " + getInteger(context, "amount") + " to your banking account");
 								context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
 								System.out.println("accountValue: " + ((PlayerEntityExt) context.getSource().getPlayer()).getAmount());
@@ -46,7 +46,6 @@ public class NywhereMod implements ModInitializer {
 					.then(literal("remove")
 						.then(argument("amount", integer())
 							.executes(context -> {
-								//setAmount(getAmount() - getInteger(context, "amount"));
 								((PlayerEntityExt) context.getSource().getPlayer()).setAmount(((PlayerEntityExt) context.getSource().getPlayer()).getAmount() - getInteger(context, "amount"));
 								Text message = Text.of("[NywhereMod] remove " + getInteger(context, "amount") + " to your banking account");
 								context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
