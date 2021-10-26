@@ -8,13 +8,6 @@ public class Account {
   private Date createdAt;
   private boolean isActive = true;
 
-  public Account(String label, double amount, boolean isActive) {
-    this.label = label;
-    this.amount = amount;
-    this.createdAt = new Date();
-    this.isActive = isActive;
-  }
-
   public Account(String label) {
     this.label = label;
   }
