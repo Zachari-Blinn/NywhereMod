@@ -4,12 +4,14 @@ import java.util.Date;
 
 public class Account {
   private final String label;
+  private final String id;
   private double amount = 0.0;
   private Date createdAt;
   private boolean isActive = true;
 
   public Account(String label) {
     this.label = label;
+    this.id = Utils.generateRandomNumber(11);
   }
 
   public String getLabel() {
@@ -39,6 +41,8 @@ public class Account {
   public void setActive(boolean active) {
     isActive = active;
   }
+
+  //todo setUser
 
   @Override
   public String toString() {

@@ -1,8 +1,10 @@
-package net.fabricmc.example;
+package net.fabricmc.example.interfaces;
+
+import net.fabricmc.example.Account;
 
 import java.util.List;
 
-public interface PlayerEntityExt {
+public interface IPlayerEntityExt {
   void setAmount(int amount);
 
   int getAmount();

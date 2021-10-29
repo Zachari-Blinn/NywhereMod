@@ -1,7 +1,7 @@
 package net.fabricmc.example.mixin;
 
 import net.fabricmc.example.Account;
-import net.fabricmc.example.PlayerEntityExt;
+import net.fabricmc.example.interfaces.IPlayerEntityExt;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityExt {
+public abstract class PlayerEntityMixin extends LivingEntity implements IPlayerEntityExt {
 
   private List<Account> accounts = new ArrayList<>();
   private int amount;
