@@ -89,13 +89,15 @@ public class NywhereMod implements ModInitializer {
 						.then(literal("account")
 								.then(literal("create")
 										.then(argument("label", string())
-												.executes(context -> {
-													IPlayerEntityExt currentPlayer = ((IPlayerEntityExt) context.getSource().getPlayer());
-													Account account = new Account(getString(context, "label"));
-													currentPlayer.addAccounts(account);
-													context.getSource().getServer().getPlayerManager().broadcastChatMessage(Text.of("New account was created: " + currentPlayer.findAccount(getString(context, "label"))), MessageType.CHAT, context.getSource().getPlayer().getUuid());
-													return 1;
-												})
+												.then(argument("bank", string())
+														.executes(context -> {
+															IPlayerEntityExt currentPlayer = ((IPlayerEntityExt) context.getSource().getPlayer());
+															Account account = new Account(getString(context, "label"), getString(context, "bank"));
+															currentPlayer.addAccounts(account);
+															context.getSource().getServer().getPlayerManager().broadcastChatMessage(Text.of("New account was created: " + currentPlayer.findAccount(getString(context, "label"))), MessageType.CHAT, context.getSource().getPlayer().getUuid());
+															return 1;
+													})
+												)
 										)
 								)
 						)
