@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Account {
   private final String label;
-  private final String code;
+  private String code;
   private double amount = 0.0;
   private Date createdAt;
   private boolean isActive = true;
@@ -15,6 +15,10 @@ public class Account {
     this.label = label;
     this.office = this.getRandomOfficeFromBank(bank);
     this.code = Utils.generateRandomNumber(11);
+  }
+
+  public Account(String label) {
+    this.label = label;
   }
 
   public Office getRandomOfficeFromBank(String bank) {

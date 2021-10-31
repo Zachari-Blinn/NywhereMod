@@ -24,62 +24,6 @@ public class NywhereMod implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("Nywhere-Mod initialized");
 
-<<<<<<< HEAD
-		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-			dispatcher.register(literal("nywhere")
-				.then(literal("money")
-					/* MONEY ADD COMMAND */
-					.then(literal("add")
-						.then(argument("account", string())
-							.then(argument("amount", integer())
-								.executes(context -> {
-									PlayerEntityExt currentPlayer = ((PlayerEntityExt) context.getSource().getPlayer());
-									Account account = currentPlayer.findAccount(getString(context, "account"));
-									Text message = Text.of("[Nywhere-Mod] Account not found");
-									if(account != null) {
-										account.setAmount(account.getAmount() + getInteger(context, "amount"));
-										message = Text.of("[Nywhere-Mod] added " + getInteger(context, "amount") + " to your banking account");
-									}
-									context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
-									return 1;
-								})
-							)
-						)
-					)
-					/* MONEY REMOVE COMMAND */
-					.then(literal("remove")
-						.then(argument("account", string())
-							.then(argument("amount", integer())
-								.executes(context -> {
-									PlayerEntityExt currentPlayer = ((PlayerEntityExt) context.getSource().getPlayer());
-									Account account = currentPlayer.findAccount(getString(context, "account"));
-									Text message = Text.of("[Nywhere-Mod] Account not found");
-									if(account != null) {
-										account.setAmount(account.getAmount() - getInteger(context, "amount"));
-										message = Text.of("[Nywhere-Mod] remove " + getInteger(context, "amount") + " to your banking account");
-									}
-									context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
-									System.out.println(message);
-									return 1;
-								})
-							)
-						)
-					)
-					/* MONEY VIEW COMMAND */
-					.then(literal("view")
-						.then(argument("account", string())
-							.executes(context -> {
-								PlayerEntityExt currentPlayer = ((PlayerEntityExt) context.getSource().getPlayer());
-								Account account = currentPlayer.findAccount(getString(context, "account"));
-								Text message = Text.of("[Nywhere-Mod] Account not found");
-								if(account != null) {
-									message = Text.of("[Nywhere-Mod] Account " + account.toString());
-								}
-								context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
-								System.out.println(message);
-								return 1;
-							})
-=======
 		CommandRegistrationCallback.EVENT.register(NywhereMod::command);
 	}
 
@@ -140,7 +84,6 @@ public class NywhereMod implements ModInitializer {
 												})
 										)
 								)
->>>>>>> 4f98736b9adb873a430623eee03e2534c60b5628
 						)
 						/* ACCOUNT CREATE COMMAND */
 						.then(literal("account")
