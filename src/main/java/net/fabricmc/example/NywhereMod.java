@@ -38,7 +38,6 @@ public class NywhereMod implements ModInitializer {
 										message = Text.of("[Nywhere-Mod] added " + getInteger(context, "amount") + " to your banking account");
 									}
 									context.getSource().getServer().getPlayerManager().broadcastChatMessage(message, MessageType.CHAT, context.getSource().getPlayer().getUuid());
-									System.out.println("accountValue: " + currentPlayer.getAmount());
 									return 1;
 								})
 							)
