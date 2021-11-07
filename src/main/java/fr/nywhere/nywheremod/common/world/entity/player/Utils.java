@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package fr.nywhere.nywheremod.common.world.entity.player;
 
 import org.apache.commons.lang3.RandomStringUtils;
 

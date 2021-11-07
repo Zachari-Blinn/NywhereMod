@@ -1,31 +1,30 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "nywheremod",
   "version": "${version}",
-
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Nywhere Mod",
+  "description": "Caca",
   "authors": [
-    "Me!"
+    "Nywhere"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/FabricMC/fabric-nywhere-mod"
   },
-
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
-
+  "icon": "assets/nywheremod/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.NywhereMod"
+      "fr.nywhere.nywheremod.NywhereMod"
+    ],
+    "cardinal-components-entity": [
+      "fr.nywhere.nywheremod.common.world.entity.player.component.PlayerComponent"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "nywheremod.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
@@ -34,5 +33,10 @@
   },
   "suggests": {
     "another-mod": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "nywheremod:player"
+    ]
   }
 }

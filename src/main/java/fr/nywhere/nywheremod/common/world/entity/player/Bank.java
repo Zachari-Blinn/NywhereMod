@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package fr.nywhere.nywheremod.common.world.entity.player;
 
 import java.util.ArrayList;
 import java.util.List;
